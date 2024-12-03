@@ -1,26 +1,15 @@
-import express, { NextFunction, Request, Response } from 'express'
+import express from 'express'
 import cors from 'cors'
 import { routes } from './http'
-import AppError from './errors/appError'
+import ErrorMiddleware from './middlewares/errorMiddleware'
 
 const app = express()
+const errorMiddleware = new ErrorMiddleware()
 
 app.use(cors())
 app.use(routes)
 
-app.use((error: Error, req: Request, res: Response, next: NextFunction) => {
-  if (error instanceof AppError) {
-    return res.status(error.statusCode).json({
-      status: 'error',
-      message: error.message,
-    })
-  }
-
-  return res.status(500).json({
-    status: 'error',
-    message: 'Internal server error',
-  })
-})
+app.use(errorMiddleware.handle)
 
 app.listen(3333, () => {
   console.log('Server is running!!!')
