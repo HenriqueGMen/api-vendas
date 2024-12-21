@@ -17,7 +17,12 @@ export class ProductsRepository {
   
   public async findByName(name: string): Promise<Product[]> {
     const product = await prisma.products.findMany({
-      where: { name }
+      where: { 
+        name: {
+          contains: name,
+          mode: 'insensitive'
+        }
+      }
     })
 
     return product
