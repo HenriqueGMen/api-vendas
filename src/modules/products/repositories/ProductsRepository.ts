@@ -14,6 +14,12 @@ export class ProductsRepository {
 
     return newProduct
   }
+
+  public async findAll(): Promise<Product[]> {
+    const products = await prisma.products.findMany()
+
+    return products
+  }
   
   public async findByName(name: string): Promise<Product[]> {
     const product = await prisma.products.findMany({

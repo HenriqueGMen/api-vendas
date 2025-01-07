@@ -1,4 +1,3 @@
-import { prisma } from "@shared/database/prismaClient"
 import { ICreateProductDTO } from "../dtos/ICreateProduct.dto"
 import { Product } from "../entities/Product"
 import { ProductsRepository } from "../repositories/ProductsRepository"
